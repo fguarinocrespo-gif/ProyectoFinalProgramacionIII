@@ -12,6 +12,7 @@ import NuevaActaPage from './pages/NuevaActaPage';
 import DetalleActaPage from './pages/DetalleActaPage';
 import DashboardPage from './pages/DashboardPage';
 import TiposInfraccionPage from './pages/TiposInfraccionPage';
+import UsuariosPage from './pages/UsuariosPage';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
                 <Route element={<ProtectedRoute roles={['administrativo']} />}>
                   <Route path="/dashboard" element={<DashboardPage />} />
                   <Route path="/tipos-infraccion" element={<TiposInfraccionPage />} />
+                  <Route path="/usuarios" element={<UsuariosPage />} />
                 </Route>
               </Route>
             </Route>

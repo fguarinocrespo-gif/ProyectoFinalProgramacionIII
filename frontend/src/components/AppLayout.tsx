@@ -10,6 +10,7 @@ import {
   LogoutOutlined,
   WarningOutlined,
   PlusOutlined,
+  TeamOutlined,
 } from '@ant-design/icons';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
@@ -69,6 +70,11 @@ const AppLayout: React.FC = () => {
             key: '/tipos-infraccion',
             icon: <WarningOutlined />,
             label: 'Tipos Infracción',
+          },
+          {
+            key: '/usuarios',
+            icon: <TeamOutlined />,
+            label: 'Usuarios',
           },
         ]
       : []),

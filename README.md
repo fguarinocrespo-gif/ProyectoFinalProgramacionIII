@@ -34,6 +34,7 @@ Sistema integral para la gestión de infracciones de tránsito, desarrollado com
    # Frontend
    cd ../frontend
    npm install
+   cp .env.example .env  # URL de la API (VITE_API_URL)
    ```
 
 2. **Ejecutar la Migración de Datos (Seed):**
@@ -74,6 +75,7 @@ Sistema integral para la gestión de infracciones de tránsito, desarrollado com
 **Administrativo:**
 - Iniciar sesión.
 - Gestión completa (CRUD) de Titulares, Vehículos y Tipos de Infracción.
+- Registrar nuevos usuarios (inspectores y administrativos) desde la sección **Usuarios**.
 - Ver todas las actas registradas en el sistema.
 - Registrar pagos (contado/tarjeta) para las actas.
 - Registrar y resolver (aceptar/rechazar) descargos.
