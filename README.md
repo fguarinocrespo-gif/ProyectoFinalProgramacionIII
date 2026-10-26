@@ -10,19 +10,17 @@ Sistema integral para la gestión de infracciones de tránsito, desarrollado com
 - Autenticación JWT con roles (inspector, administrativo)
 - Validaciones con Zod
 - Swagger para documentación de API
-- Vitest + Supertest para testing
 
 **Frontend:**
 - React 18 + TypeScript (Vite)
 - Ant Design (UI Library)
 - React Router DOM
 - Axios (con interceptores)
-- Vitest + React Testing Library
 
 ## 🚀 Requisitos Previos
 
 - Node.js (v18+)
-- MongoDB corriendo localmente (puerto por defecto 27017) o URI de MongoDB Atlas
+- MongoDB Community Server corriendo localmente (puerto por defecto 27017) o URI de MongoDB Atlas (configurada en `MONGODB_URI` del `.env`)
 
 ## 📦 Instalación y Configuración
 
@@ -64,22 +62,6 @@ Sistema integral para la gestión de infracciones de tránsito, desarrollado com
    npm run dev
    ```
    El frontend correrá en `http://localhost:5173`
-
-## 🧪 Testing y Coverage
-
-Se han implementado tests unitarios y de integración para cumplir con la cobertura mínima requerida.
-
-**Correr tests del Backend:**
-```bash
-cd backend
-npm run test:coverage
-```
-
-**Correr tests del Frontend:**
-```bash
-cd frontend
-npm run test:coverage
-```
 
 ## 👥 Roles y Funcionalidades Principales
 
