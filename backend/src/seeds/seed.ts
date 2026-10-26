@@ -151,7 +151,7 @@ const seed = async () => {
     console.log(`⚠️  ${tiposInfraccion.length} tipos de infracción creados`);
 
     // ========== ACTAS DE INFRACCIÓN ==========
-    const actas = await ActaInfraccion.create([
+    const actasData = [
       {
         vehiculoId: vehiculos[0]._id,
         tipoInfraccionId: tiposInfraccion[0]._id,
@@ -267,7 +267,14 @@ const seed = async () => {
         monto: tiposInfraccion[6].montoBase,
         estado: 'pendiente',
       },
-    ]);
+    ];
+
+    const actas: InstanceType<typeof ActaInfraccion>[] = [];
+    for (const data of actasData) {
+      // Se crean de a una para que el hook pre-save asigne numeroActa secuencial
+      const acta = await ActaInfraccion.create(data as any);
+      actas.push(acta);
+    }
     console.log(`📝 ${actas.length} actas de infracción creadas`);
 
     // ========== PAGOS ==========

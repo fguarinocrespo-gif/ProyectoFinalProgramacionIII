@@ -12,7 +12,6 @@ import {
   Input,
   InputNumber,
   Select,
-  Divider,
   List,
   Spin,
 } from 'antd';
@@ -36,6 +35,19 @@ const estadoColors: Record<string, string> = {
   pagada: 'green',
   en_descargo: 'purple',
   anulada: 'red',
+};
+
+// Transiciones manuales permitidas (espejo de la regla del backend).
+// 'pagada' y 'en_descargo' solo se alcanzan registrando un pago o un descargo.
+const transicionesManuales: Record<string, { value: string; label: string }[]> = {
+  pendiente: [
+    { value: 'notificada', label: 'Notificada' },
+    { value: 'anulada', label: 'Anulada' },
+  ],
+  notificada: [{ value: 'anulada', label: 'Anulada' }],
+  en_descargo: [],
+  pagada: [],
+  anulada: [],
 };
 
 const DetalleActaPage: React.FC = () => {
@@ -147,6 +159,7 @@ const DetalleActaPage: React.FC = () => {
   const inspector = acta.inspectorId as any;
   const puedeRegistrarPago = ['pendiente', 'notificada'].includes(acta.estado);
   const puedeRegistrarDescargo = ['pendiente', 'notificada'].includes(acta.estado);
+  const opcionesEstado = transicionesManuales[acta.estado] ?? [];
 
   return (
     <>
@@ -160,7 +173,7 @@ const DetalleActaPage: React.FC = () => {
 
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {/* Información del Acta */}
-        <Card title="Información del Acta">
+        <Card title="Información del Acta" bodyStyle={{ overflowX: 'auto' }}>
           <Descriptions column={{ xs: 1, sm: 2 }} bordered size="small">
             <Descriptions.Item label="N° Acta">{acta.numeroActa}</Descriptions.Item>
             <Descriptions.Item label="Estado">
@@ -192,7 +205,7 @@ const DetalleActaPage: React.FC = () => {
         </Card>
 
         {/* Información del Vehículo y Titular */}
-        <Card title="Vehículo y Titular">
+        <Card title="Vehículo y Titular" bodyStyle={{ overflowX: 'auto' }}>
           <Descriptions column={{ xs: 1, sm: 2 }} bordered size="small">
             <Descriptions.Item label="Patente">{vehiculo?.patente}</Descriptions.Item>
             <Descriptions.Item label="Vehículo">
@@ -229,9 +242,17 @@ const DetalleActaPage: React.FC = () => {
                   Registrar Descargo
                 </Button>
               )}
-              <Button onClick={() => setEstadoModalOpen(true)}>
-                Cambiar Estado
-              </Button>
+              {opcionesEstado.length > 0 && (
+                <Button onClick={() => setEstadoModalOpen(true)}>
+                  Cambiar Estado
+                </Button>
+              )}
+              {!puedeRegistrarPago && !puedeRegistrarDescargo && opcionesEstado.length === 0 && (
+                <Text type="secondary">
+                  No hay acciones disponibles para un acta en estado{' '}
+                  {acta.estado.replace('_', ' ')}.
+                </Text>
+              )}
             </Space>
           </Card>
         )}
@@ -373,9 +394,6 @@ const DetalleActaPage: React.FC = () => {
           >
             <TextArea rows={4} />
           </Form.Item>
-          <Form.Item name="documentacionAdjunta" label="Documentación adjunta">
-            <Input placeholder="Nombre del archivo adjunto" />
-          </Form.Item>
         </Form>
       </Modal>
 
@@ -384,11 +402,8 @@ const DetalleActaPage: React.FC = () => {
         title="Cambiar Estado del Acta"
         open={estadoModalOpen}
         onCancel={() => setEstadoModalOpen(false)}
-        onOk={() => {
-          const estadoSelect = document.getElementById('estado-select') as any;
-          // Use form approach instead
-        }}
         footer={null}
+        destroyOnHidden
       >
         <Form layout="vertical" onFinish={handleCambiarEstado}>
           <Form.Item
@@ -397,13 +412,7 @@ const DetalleActaPage: React.FC = () => {
             rules={[{ required: true, message: 'Seleccione el estado' }]}
           >
             <Select
-              options={[
-                { value: 'pendiente', label: 'Pendiente' },
-                { value: 'notificada', label: 'Notificada' },
-                { value: 'pagada', label: 'Pagada' },
-                { value: 'en_descargo', label: 'En Descargo' },
-                { value: 'anulada', label: 'Anulada' },
-              ]}
+              options={opcionesEstado}
             />
           </Form.Item>
           <Form.Item>

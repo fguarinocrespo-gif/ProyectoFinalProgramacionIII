@@ -164,6 +164,7 @@ const TitularesPage: React.FC = () => {
         loading={loading}
         size="middle"
         pagination={{ pageSize: 10 }}
+        scroll={{ x: 'max-content' }}
       />
 
       {/* Modal de Crear/Editar */}

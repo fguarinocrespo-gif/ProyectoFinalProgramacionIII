@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response, next: NextFunction): Pr
     }
 
     const token = generarToken(
-      usuario._id as string,
+      usuario._id.toString(),
       usuario.email,
       usuario.rol
     );

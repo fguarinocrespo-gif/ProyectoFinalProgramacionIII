@@ -68,7 +68,7 @@ const actaInfraccionSchema = new Schema<IActaInfraccion>(
 );
 
 // Auto-incrementar número de acta
-actaInfraccionSchema.pre('save', async function (next) {
+actaInfraccionSchema.pre('save', async function () {
   if (this.isNew) {
     const lastActa = await mongoose
       .model('ActaInfraccion')
@@ -77,7 +77,6 @@ actaInfraccionSchema.pre('save', async function (next) {
       .lean();
     this.numeroActa = lastActa ? (lastActa as any).numeroActa + 1 : 1;
   }
-  next();
 });
 
 export const ActaInfraccion = mongoose.model<IActaInfraccion>(

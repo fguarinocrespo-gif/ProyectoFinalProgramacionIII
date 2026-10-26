@@ -18,7 +18,6 @@ import {
   CheckCircleOutlined,
   ClockCircleOutlined,
 } from '@ant-design/icons';
-import dayjs from 'dayjs';
 import { dashboardService } from '../api/services';
 import type { DashboardResumen } from '../types';
 

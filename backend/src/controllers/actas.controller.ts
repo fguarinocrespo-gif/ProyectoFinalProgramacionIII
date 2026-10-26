@@ -133,6 +133,29 @@ export const cambiarEstadoActa = async (
   try {
     const { estado } = req.body;
 
+    const actaActual = await ActaInfraccion.findById(req.params.id);
+    if (!actaActual) {
+      res.status(404).json({ message: 'Acta no encontrada' });
+      return;
+    }
+
+    // Transiciones manuales permitidas. 'pagada' y 'en_descargo' se alcanzan
+    // únicamente registrando un pago o un descargo.
+    const transicionesPermitidas: Record<string, string[]> = {
+      pendiente: ['notificada', 'anulada'],
+      notificada: ['anulada'],
+      en_descargo: [],
+      pagada: [],
+      anulada: [],
+    };
+    const permitidos = transicionesPermitidas[actaActual.estado] ?? [];
+    if (!permitidos.includes(estado)) {
+      res.status(400).json({
+        message: `No se puede cambiar el estado de "${actaActual.estado}" a "${estado}"`,
+      });
+      return;
+    }
+
     const acta = await ActaInfraccion.findByIdAndUpdate(
       req.params.id,
       { estado },

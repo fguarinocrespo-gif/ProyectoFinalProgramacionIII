@@ -9,7 +9,6 @@ import {
   Switch,
   message,
   Typography,
-  Space,
   Tag,
 } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';

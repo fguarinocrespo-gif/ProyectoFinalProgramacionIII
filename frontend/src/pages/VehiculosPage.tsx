@@ -67,7 +67,9 @@ const VehiculosPage: React.FC = () => {
       form.resetFields();
       fetchVehiculos();
     } catch (error: any) {
-      message.error(error.response?.data?.message || 'Error al guardar vehículo');
+      const errorData = error.response?.data;
+      const specificMessage = errorData?.errors?.[0]?.mensaje;
+      message.error(specificMessage || errorData?.message || 'Error al guardar vehículo');
     }
   };
 
