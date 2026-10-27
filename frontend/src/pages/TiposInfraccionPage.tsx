@@ -45,10 +45,10 @@ const TiposInfraccionPage: React.FC = () => {
     try {
       if (editando) {
         await tiposInfraccionService.actualizar(editando._id, values);
-        message.success('Tipo actualizado');
+        message.success('Tipo de infracción actualizado');
       } else {
         await tiposInfraccionService.crear(values);
-        message.success('Tipo creado');
+        message.success('Tipo de infracción creado');
       }
       setModalOpen(false);
       setEditando(null);
@@ -121,6 +121,7 @@ const TiposInfraccionPage: React.FC = () => {
         loading={loading}
         size="middle"
         pagination={{ pageSize: 10 }}
+        scroll={{ x: 'max-content' }}
       />
 
       <Modal

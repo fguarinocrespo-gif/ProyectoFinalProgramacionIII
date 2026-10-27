@@ -21,6 +21,7 @@ export const authService = {
   register: (data: { nombre: string; apellido: string; email: string; password: string; rol: string }) =>
     api.post('/auth/register', data),
   getMe: () => api.get<Usuario>('/auth/me'),
+  listarUsuarios: () => api.get<Usuario[]>('/auth/usuarios'),
 };
 
 // ========== TITULARES ==========

@@ -91,3 +91,16 @@ export const getMe = async (req: Request, res: Response, next: NextFunction): Pr
     next(error);
   }
 };
+
+export const listarUsuarios = async (
+  _req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const usuarios = await Usuario.find().select('-password').sort({ createdAt: -1 });
+    res.json(usuarios);
+  } catch (error) {
+    next(error);
+  }
+};

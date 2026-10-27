@@ -156,6 +156,7 @@ const ActasPage: React.FC = () => {
           onChange={(e) => setFiltroPatente(e.target.value)}
         />
         <RangePicker
+          style={{ maxWidth: '100%' }}
           onChange={(dates) => {
             if (dates && dates[0] && dates[1]) {
               setFiltroFechas([
@@ -178,6 +179,7 @@ const ActasPage: React.FC = () => {
         rowKey="_id"
         loading={loading}
         size="middle"
+        scroll={{ x: 'max-content' }}
         pagination={{
           current: pagination.page,
           total: pagination.total,

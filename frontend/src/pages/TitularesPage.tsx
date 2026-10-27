@@ -213,8 +213,26 @@ const TitularesPage: React.FC = () => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="telefono" label="Teléfono">
-            <Input />
+          <Form.Item
+            name="telefono"
+            label="Teléfono"
+            rules={[
+              {
+                validator: async (_, value) => {
+                  if (!value || value.trim() === '') return Promise.resolve();
+                  if (!/^[0-9\s\-()+]+$/.test(value)) {
+                    return Promise.reject(new Error('El teléfono solo puede contener números, espacios o guiones'));
+                  }
+                  const digits = value.replace(/\D/g, '');
+                  if (digits.length < 7 || digits.length > 15) {
+                    return Promise.reject(new Error('El teléfono debe tener entre 7 y 15 dígitos numéricos'));
+                  }
+                  return Promise.resolve();
+                },
+              },
+            ]}
+          >
+            <Input placeholder="Ej: 011-4201-5678 o 1155667788" />
           </Form.Item>
           <Form.Item
             name="email"

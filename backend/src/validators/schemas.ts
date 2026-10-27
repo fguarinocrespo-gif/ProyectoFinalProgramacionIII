@@ -41,7 +41,22 @@ export const titularSchema = z.object({
   domicilio: z
     .string({ error: 'El domicilio es obligatorio' })
     .min(3, 'El domicilio debe tener al menos 3 caracteres'),
-  telefono: z.string().optional().default(''),
+  telefono: z
+    .string()
+    .trim()
+    .refine(
+      (val) => {
+        if (!val || val === '') return true;
+        if (!/^[0-9\s\-()+]+$/.test(val)) return false;
+        const digits = val.replace(/\D/g, '');
+        return digits.length >= 7 && digits.length <= 15;
+      },
+      {
+        message: 'Teléfono inválido. Debe contener entre 7 y 15 dígitos numéricos',
+      }
+    )
+    .optional()
+    .default(''),
   email: z.string().email('Email inválido').optional().or(z.literal('')).default(''),
 });
 

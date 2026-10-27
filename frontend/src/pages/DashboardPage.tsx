@@ -76,12 +76,13 @@ const DashboardPage: React.FC = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 24 }}>
         <Title level={4} style={{ margin: 0 }}>
           Dashboard
         </Title>
-        <Space>
+        <Space wrap>
           <RangePicker
+            style={{ maxWidth: '100%' }}
             onChange={(dates) => {
               if (dates && dates[0] && dates[1]) {
                 setFechas([dates[0].toISOString(), dates[1].toISOString()]);

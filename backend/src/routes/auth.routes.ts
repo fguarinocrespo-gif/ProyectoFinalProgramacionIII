@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { login, register, getMe } from '../controllers/auth.controller';
+import { login, register, getMe, listarUsuarios } from '../controllers/auth.controller';
 import { auth } from '../middleware/auth';
 import { roleGuard } from '../middleware/roleGuard';
 import { validate } from '../middleware/validate';
@@ -86,5 +86,19 @@ router.post(
  *         description: No autenticado
  */
 router.get('/me', auth, getMe);
+
+/**
+ * @swagger
+ * /auth/usuarios:
+ *   get:
+ *     summary: Listar todos los usuarios del sistema (solo administrativo)
+ *     tags: [Auth]
+ *     responses:
+ *       200:
+ *         description: Listado de usuarios
+ *       403:
+ *         description: No autorizado
+ */
+router.get('/usuarios', auth, roleGuard('administrativo'), listarUsuarios);
 
 export default router;

@@ -392,7 +392,13 @@ const DetalleActaPage: React.FC = () => {
               { min: 10, message: 'Mínimo 10 caracteres' },
             ]}
           >
-            <TextArea rows={4} />
+            <TextArea rows={4} placeholder="Detalle los fundamentos y descargos legales del titular..." />
+          </Form.Item>
+          <Form.Item
+            name="documentacionAdjunta"
+            label="Documentación de Respaldo (referencia o nombre de archivo)"
+          >
+            <Input placeholder="Ej: poliza_renovacion.pdf o Nota de descargo ref. 104" />
           </Form.Item>
         </Form>
       </Modal>
